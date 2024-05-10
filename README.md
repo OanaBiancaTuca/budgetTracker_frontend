@@ -1,7 +1,7 @@
 Aplicație web pentru gestionarea bugetului personal. 
 
 Principalele funcționalități
- - Crearea unui cont, resetare parola, verificare pe email
+-  Crearea unui cont, resetare parola, verificare pe email
 -        Stabilirea unor obiective financiare, utilizatorul își poate seta o listă de dorințe
 -    Setare lista datorii
 -    creare categorii
@@ -11,8 +11,7 @@ Principalele funcționalități
 
 -    TO DO: 
 -        Importarea tranzacțiilor, utilizatorul poate adăuga în aplicație extrase de cont, de unde vor fi preluate automat tranzacțiile.
--        Aplicația va trimite notificări și alerte utilizatorului pentru a-i aminti de plăți și scadențe- pt datorii in momentul in care se apropie data scadenta, daca e neplatita sa se trimita notificare, 
-         pentru bugete, in momentul in care adaug o tranzactie care depaseste bugetul alocat sa se afiseze mesaj pe eroare+alerta pe email
+-        Aplicația va trimite notificări și alerte utilizatorului pentru a-i aminti de plăți și scadențe- pt datorii in momentul in care se apropie data scadenta, daca e neplatita sa se trimita notificare, pentru bugete, in momentul in care adaug o tranzactie care depaseste bugetul alocat sa se afiseze mesaj pe eroare+alerta pe email
 -    Chat pt sfaturi
 -     Oferă informații despre opțiunile de investiții și economisi
 -    In functie de comportamentul utilizatorului și în funcție de toate cheltuielile pe care le are, aplicația îi va calcula în cât timp poate să cumpere ceea ce își dorește/ in cat timp ajunge la indeplinirea obiectivului. De asemenea, va avea sugestii de economisire.
