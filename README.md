@@ -1,70 +1,45 @@
-# Getting Started with Create React App
+Aplicație web pentru gestionarea bugetului personal. 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Principalele funcționalități
+-  Crearea unui cont, resetare parola, verificare pe email
+-        Stabilirea unor obiective financiare, utilizatorul își poate seta o listă de dorințe
+-    Setare lista datorii
+-    creare categorii
+-    creare conturi bancare
+-    setare bugete
+-        Gestionarea cheltuielilor si veniturilor.
 
-## Available Scripts
+-    TO DO: 
+-        Importarea tranzacțiilor, utilizatorul poate adăuga în aplicație extrase de cont, de unde vor fi preluate automat tranzacțiile.
+-        Aplicația va trimite notificări și alerte utilizatorului pentru a-i aminti de plăți și scadențe- pt datorii in momentul in care se apropie data scadenta, daca e neplatita sa se trimita notificare, pentru bugete, in momentul in care adaug o tranzactie care depaseste bugetul alocat sa se afiseze mesaj pe eroare+alerta pe email
+-    Chat pt sfaturi
+-     Oferă informații despre opțiunile de investiții și economisi
+-    In functie de comportamentul utilizatorului și în funcție de toate cheltuielile pe care le are, aplicația îi va calcula în cât timp poate să cumpere ceea ce își dorește/ in cat timp ajunge la indeplinirea obiectivului. De asemenea, va avea sugestii de economisire.
+![image](https://github.com/OanaBiancaTuca/budgetTracker_frontend/assets/84070869/b1149eb2-be8f-4200-ba5e-d5c1942e36d5)
 
-In the project directory, you can run:
 
-### `npm start`
+![image](https://github.com/OanaBiancaTuca/budgetTracker_frontend/assets/84070869/66706ad7-90ee-4835-b07c-f0e50899a3e4)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+![image](https://github.com/OanaBiancaTuca/budgetTracker_frontend/assets/84070869/7daf5675-c64c-41af-aa18-9b1b70a9b081)
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![image](https://github.com/OanaBiancaTuca/budgetTracker_frontend/assets/84070869/2de130fd-5b26-4da9-9999-524b0eb713dd)
+email: test@gmail.com
+password: 123
 
-### `npm run build`
+![image](https://github.com/OanaBiancaTuca/budgetTracker_frontend/assets/84070869/2b80477c-4168-49ad-ba32-e1944d4bd9fc)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![image](https://github.com/OanaBiancaTuca/budgetTracker_frontend/assets/84070869/c41ffea0-b5e1-43bf-87d5-f04bd170818d)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+![image](https://github.com/OanaBiancaTuca/budgetTracker_frontend/assets/84070869/f1bf6fd2-09ca-4667-bb5d-3bc8011d9038)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+![image](https://github.com/OanaBiancaTuca/budgetTracker_frontend/assets/84070869/a5a481ec-3b76-456c-8a19-8b7d5d67bba6)
 
-### `npm run eject`
+![image](https://github.com/OanaBiancaTuca/budgetTracker_frontend/assets/84070869/00750134-e36a-465a-97e6-3b4a0b04a272)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+![image](https://github.com/OanaBiancaTuca/budgetTracker_frontend/assets/84070869/dc0a4f82-d947-415a-bbef-14fb3d6f4522)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+![image](https://github.com/OanaBiancaTuca/budgetTracker_frontend/assets/84070869/744a33eb-c4bc-4483-bae8-90257e3c8eba)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+![image](https://github.com/OanaBiancaTuca/budgetTracker_frontend/assets/84070869/9f237b8d-bb30-4ee7-995c-c8335d0818f8)
