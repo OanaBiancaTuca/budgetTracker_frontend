@@ -71,7 +71,7 @@ export default function CategoryForm(props) {
     >
       <LoadingOverlay visible={addCategoryInProcess} overlayBlur={2} />
       <Title style={{ marginLeft: 10 }} order={3}>
-        Add Category
+        Adaugă Categorie
       </Title>
       <Container size="md">
         <form

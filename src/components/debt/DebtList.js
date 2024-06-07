@@ -236,13 +236,13 @@ const DebtList = () => {
                 onClick={close} 
                 fullWidth 
                 style={{ marginLeft: '10px', width: '45%' }} color='gray' >
-                Cancel
+                Anulează
               </Button>
               <Button 
                 onClick={() => handleSaveModal(debtId)}
                 fullWidth 
                 style={{ marginRight: '10px', width: '45%' }}>
-                Update
+                Modifică
               </Button>
             </div>
           </Modal>

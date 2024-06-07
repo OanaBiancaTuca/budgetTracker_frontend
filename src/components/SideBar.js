@@ -20,7 +20,8 @@ import { ReactComponent as AddBudgetIcon } from "../assets/Date_range_duotone.sv
 import { ReactComponent as AddTransactionIcon } from "../assets/Collapse_light_duotone.svg";
 import { ReactComponent as AddAccountIcon } from "../assets/Database_duotone.svg";
 import { ReactComponent as AddGoalIcon } from "../assets/Road_finish_duotone_line.svg";
-
+import { ReactComponent as ChatbotIcon } from "../assets/ChatbotIcon.svg"; // Add this import
+import { ReactComponent as ChatbotIconBlue } from "../assets/ChatbotIconBlue.svg"; // Add this import
 
 import { useNavigate } from "react-router-dom";
 import CategoryForm from "./category/CategoryForm";
@@ -64,7 +65,7 @@ export default function SideBar(props) {
     dispatch(closeBudgetForm());
   }
 
-  function handleBudgetFormClose() {
+  function handleGoalFormClose() {
     dispatch(closeGoalForm());
   }
 
@@ -158,6 +159,14 @@ export default function SideBar(props) {
                   rightSection={<></>}
                   active={props.currentPage === "Reports"}
               />
+              <NavLink
+                  style={{ borderRadius: 8,marginBottom:10 }}
+                  label={props.currentPage === "Chat" ?<Text fw={600}>Chat</Text>:<Text>Chat</Text>}
+                  icon={props.currentPage === "Chat" ?<ChatbotIconBlue style={{width:16,height:16}}/> : <ChatbotIcon style={{width:16,height:16}}/>}
+                  onClick={() => navigate("/chat")}
+                  rightSection={<></>}
+                  active={props.currentPage === "Chat"}
+              />
             </Box>
           </div>
         </Navbar.Section>
@@ -208,7 +217,7 @@ export default function SideBar(props) {
               open={displayTransactionForm}
               close={handleTransactionFormClose}></TransactionForm>
           <BudgetForm open={displayBudgetForm} close={handleBudgetFormClose}/>
-          <GoalForm open={displayGoalForm} close={handleBudgetFormClose}/>
+          <GoalForm open={displayGoalForm} close={handleGoalFormClose}/>
           <DebtForm isOpen={debtFormOpen} onClose={openDebtForm}/>
 
         </Navbar.Section>
