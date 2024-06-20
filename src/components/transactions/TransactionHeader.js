@@ -1,30 +1,47 @@
-import { Title, Button, Grid, TextInput } from '@mantine/core';
+import { Title, Button, Grid, TextInput, Modal, NumberInput, Group, Text } from '@mantine/core';
+import { DatePicker } from '@mantine/dates';
 import { ReactComponent as FilterIcon } from '../../assets/Filter_alt.svg';
 import { ReactComponent as SearchIcon } from '../../assets/Search.svg';
-import { useState, useEffect } from "react"; // Added useEffect
-import { useDispatch, useSelector } from "react-redux";
-import { closeTransactionForm, showTransactionForm } from "../../features/transactionSlice";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { showTransactionForm } from "../../features/transactionSlice";
 
-export default function TransactionHeader() {
+export default function TransactionHeader({ onSearch, onFilter }) {
     const [searchValue, setSearchValue] = useState("");
-    const transactions = useSelector(state => state.transactions?.list || []);
-
-    useEffect(() => { // Added useEffect for logging transactions
-        transactions.forEach((transaction, index) => {
-            console.log(`Tranzactia ${index + 1}:`, transaction.name);
-        });
-    }, [transactions]);
-
-    const dispatch = useDispatch();
-
-    // Updated filter logic to search by category
-    const filteredTransactions = transactions.filter(transaction =>
-        transaction.category.name.toLowerCase().includes(searchValue.toLowerCase())
-    );
+    const [filterModalOpen, setFilterModalOpen] = useState(false);
+    const [filterValues, setFilterValues] = useState({
+        minAmount: '',
+        maxAmount: '',
+        startDate: null,
+        endDate: null
+    });
 
     const handleInputChange = (event) => {
-        setSearchValue(event.target.value);
+        const value = event.target.value;
+        setSearchValue(value);
+        onSearch(value); // Pass the search value to the parent component
     };
+
+    const handleFilterChange = (field, value) => {
+        setFilterValues({ ...filterValues, [field]: value });
+    };
+
+    const applyFilters = () => {
+        onFilter(filterValues);
+        setFilterModalOpen(false);
+        resetFilterValues();
+    };
+
+    const resetFilterValues = () => {
+        setFilterValues({
+            minAmount: '',
+            maxAmount: '',
+            startDate: null,
+            endDate: null
+        });
+    };
+
+    const dispatch = useDispatch();
 
     return (
         <div style={{ marginBottom: 10 }}>
@@ -54,21 +71,76 @@ export default function TransactionHeader() {
                             />
                         </Grid.Col>
                         <Grid.Col md={12} lg={4}>
-                            <Button radius="md" style={{ margin: 8 }} leftIcon={<FilterIcon />} variant="outline" color='gray'>
+                            <Button radius="md" style={{ margin: 8 }} leftIcon={<FilterIcon />} variant="outline" color='green' onClick={() => setFilterModalOpen(true)}>
                                 Filtrare
                             </Button>
                         </Grid.Col>
                     </Grid>
                 </Grid.Col>
             </Grid>
-            {/* Rendering filtered transactions */}
-            <div>
-                {filteredTransactions.map(transaction => (
-                    <div key={transaction.id}>
-                        {transaction.category.name} - {transaction.name} {/* Displaying category with name for clarity */}
-                    </div>
-                ))}
-            </div>
+
+            <Modal
+                opened={filterModalOpen}
+                onClose={() => {
+                    setFilterModalOpen(false);
+                    resetFilterValues();
+                }}
+                title="Filtrare Tranzacții"
+                overlayProps={{
+                    color: "green",
+                    opacity: 0.55,
+                    blur: 3,
+                }}
+                size="lg"
+                centered
+                radius="md"
+                withCloseButton={false}
+            >
+                <div style={{ padding: 20 }}>
+                    <Text size="sm" style={{ marginBottom: 10 }} color="dimmed">
+                        Selectați criteriile de filtrare pentru a restrânge lista de tranzacții.
+                    </Text>
+                    <NumberInput
+                        label="Sumă minimă"
+                        value={filterValues.minAmount}
+                        onChange={(value) => handleFilterChange('minAmount', value)}
+                        min={0}
+                        step={100}
+                        placeholder="Introdu suma minimă"
+                        style={{ marginBottom: 16 }}
+                    />
+                    <NumberInput
+                        label="Sumă maximă"
+                        value={filterValues.maxAmount}
+                        onChange={(value) => handleFilterChange('maxAmount', value)}
+                        min={0}
+                        step={100}
+                        placeholder="Introdu suma maximă"
+                        style={{ marginBottom: 16 }}
+                    />
+                    <DatePicker
+                        label="Data început"
+                        value={filterValues.startDate}
+                        onChange={(date) => handleFilterChange('startDate', date)}
+                        placeholder="Alege data de început"
+                        style={{ marginBottom: 16 }}
+                    />
+                    <DatePicker
+                        label="Data sfârșit"
+                        value={filterValues.endDate}
+                        onChange={(date) => handleFilterChange('endDate', date)}
+                        placeholder="Alege data de sfârșit"
+                        style={{ marginBottom: 16 }}
+                    />
+                    <Group position="apart" mt="md">
+                        <Button variant="outline" color="red" onClick={() => {
+                            setFilterModalOpen(false);
+                            resetFilterValues();
+                        }}>Anulează</Button>
+                        <Button style={{ backgroundColor: "#004d00" }} onClick={applyFilters}>Aplică filtre</Button>
+                    </Group>
+                </div>
+            </Modal>
         </div>
     );
 }

@@ -1,11 +1,11 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {createTransaction, deleteTransaction, getTransaction, updateTransaction} from "../api/transactionService";
-import {notifications} from "@mantine/notifications";
-import {ReactComponent as SuccessIcon} from "../assets/success-icon.svg";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createTransaction, deleteTransaction, getTransaction, updateTransaction } from "../api/transactionService";
+import { notifications } from "@mantine/notifications";
+import { ReactComponent as SuccessIcon } from "../assets/success-icon.svg";
 
-export const addTransaction =
-    createAsyncThunk('transaction/addTransaction',async (body)=>{
-        return  createTransaction(
+export const addTransaction = createAsyncThunk('transaction/addTransaction', async (body) => {
+    try {
+        const response = await createTransaction(
             body.token,
             body.amount,
             body.description,
@@ -13,16 +13,16 @@ export const addTransaction =
             body.dateTime,
             body.categoryId,
             body.accountId
-        ).then((res) =>{
-            return res.data
-        }).catch((err) =>{
-            return err.response.date
-        })
-    })
+        );
+        return response;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+});
 
-export const editTransaction =
-    createAsyncThunk('transaction/editTransaction',async (body)=>{
-        return  updateTransaction(
+export const editTransaction = createAsyncThunk('transaction/editTransaction', async (body) => {
+    try {
+        const response = await updateTransaction(
             body.token,
             body.amount,
             body.description,
@@ -31,180 +31,186 @@ export const editTransaction =
             body.categoryId,
             body.accountId,
             body.transactionId
-        ).then((res) =>{
-            return res.data
-        }).catch((err) =>{
-            return err.response.date
-        })
-    })
+        );
+        return response;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+});
 
-export const fetchTransaction =
-    createAsyncThunk('transaction/fetchTransaction',async (body)=>{
-        return  getTransaction(
-            body.token
-        ).then((res) =>{
-            return res.data
-        }).catch((err) =>{
-            return err.response.date
-        })
-    })
+export const fetchTransaction = createAsyncThunk('transaction/fetchTransaction', async (body) => {
+    try {
+        const response = await getTransaction(body.token);
+        return response;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+});
 
-export const removeTransaction =
-    createAsyncThunk('transaction/removeTransaction',async (body)=>{
-        return  deleteTransaction(
-            body.token,
-            body.transactionId
-        ).then((res) =>{
-            return res.data
-        }).catch((err) =>{
-            return err.response.date
-        })
-    })
+export const removeTransaction = createAsyncThunk('transaction/removeTransaction', async (body) => {
+    try {
+        const response = await deleteTransaction(body.token, body.transactionId);
+        return response;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+});
 
 const transactionSlice = createSlice({
-    name:"transaction",
-    initialState:{
-        count:0,
-        displayTransactionForm:false,
-        addTransactionInProcess:false,
-        editTransactionInProcess:false,
-        fetchTransactionInProcess:false,
-        transactionList:[]
+    name: "transaction",
+    initialState: {
+        count: 0,
+        displayTransactionForm: false,
+        addTransactionInProcess: false,
+        editTransactionInProcess: false,
+        fetchTransactionInProcess: false,
+        transactionList: []
     },
-    reducers:{
+    reducers: {
         showTransactionForm: (state) => {
-            state.displayTransactionForm = true
+            state.displayTransactionForm = true;
         },
-        closeTransactionForm:(state) =>{
-            state.displayTransactionForm = false
+        closeTransactionForm: (state) => {
+            state.displayTransactionForm = false;
         }
     },
-    extraReducers:{
-        [addTransaction.pending]:(state) => {
-            state.addTransactionInProcess = true
-            console.log("Transaction Add pending")
+    extraReducers: {
+        [addTransaction.pending]: (state) => {
+            state.addTransactionInProcess = true;
+            console.log("Adăugare tranzacție în așteptare");
         },
-        [addTransaction.fulfilled]:(state,action) =>{
-            if(action.payload.message ==="success"){
+        [addTransaction.fulfilled]: (state, action) => {
+            const payload = action.payload || {};
+            console.log("Răspuns Tranzacție:", payload);
+
+            if (payload.message && payload.message === "success") {
                 notifications.show({
-                    title: 'Transaction Added',
+                    title: 'Tranzacție Adăugată',
                     message: 'Tranzacție adăugată cu succes!!',
                     icon: <SuccessIcon />,
-                    radius:"lg",
+                    radius: "lg",
                     autoClose: 5000,
-                })
-                console.log("Transaction Created")
-            }else {
+                    color: "green",
+                });
+                console.log("Tranzacție creată");
+            } else {
                 notifications.show({
-                    title: action.payload.message,
-                    message: 'Te rugăm să încerci din nou!!',
-                    radius:"lg",
-                    color:"red",
-                })
-                console.log(action.payload.message)
+                    title: "Eroare",
+                    message: payload.message || 'Te rugăm să încerci din nou!!',
+                    radius: "lg",
+                    color: "red",
+                });
+                console.log(payload.message);
             }
-            state.addTransactionInProcess =false
-            state.displayTransactionForm = false
+            state.addTransactionInProcess = false;
+            state.displayTransactionForm = false;
         },
-        [addTransaction.rejected]:(state)=>{
-            state.addTransactionInProcess = false
-            console.log("Transaction Create failed")
+        [addTransaction.rejected]: (state, action) => {
+            state.addTransactionInProcess = false;
+            console.log("Crearea tranzacției a eșuat", action.error);
             notifications.show({
-                title: "Transaction Create failed",
+                title: "Crearea tranzacției a eșuat",
                 message: 'Te rugăm să încerci din nou!!',
-                radius:"lg",
-                color:"red",
-            })
+                radius: "lg",
+                color: "red",
+            });
         },
-        [editTransaction.pending]:(state) => {
-            console.log("Transaction Edit pending")
-            state.editTransactionInProcess = true
+        [editTransaction.pending]: (state) => {
+            console.log("Editarea tranzacției în așteptare");
+            state.editTransactionInProcess = true;
         },
-        [editTransaction.fulfilled]:(state,action) =>{
+        [editTransaction.fulfilled]: (state, action) => {
+            const payload = action.payload || {};
+            console.log("Răspuns Tranzacție:", payload);
 
-            if(action.payload.message ==="success"){
+            if (payload.message && payload.message === "success") {
                 notifications.show({
-                    title: 'Transaction Updated',
+                    title: 'Tranzacție Updatată',
                     message: 'Tranzacție updatată cu succes!!',
                     icon: <SuccessIcon />,
-                    radius:"lg",
+                    radius: "lg",
                     autoClose: 5000,
-                })
-                console.log("Transaction Updated")
-            }else {
+                    color: "green",
+                });
+                console.log("Tranzacție updatată");
+            } else {
                 notifications.show({
-                    title: action.payload.message,
-                    message: 'Te rugăm să încerci din nou!!',
-                    radius:"lg",
-                    color:"red",
-                })
-                console.log(action.payload.message)
+                    title: "Eroare",
+                    message: payload.message || 'Te rugăm să încerci din nou!!',
+                    radius: "lg",
+                    color: "red",
+                });
+                console.log(payload.message);
             }
-            state.editTransactionInProcess = false
+            state.editTransactionInProcess = false;
         },
-        [editTransaction.rejected]:(state)=>{
+        [editTransaction.rejected]: (state, action) => {
             notifications.show({
-                title: "Transaction Create failed",
+                title: "Editarea tranzacției a eșuat",
                 message: 'Te rugăm să încerci din nou!!',
-                radius:"lg",
-                color:"red",
-            })
-            state.editTransactionInProcess = false
+                radius: "lg",
+                color: "red",
+            });
+            state.editTransactionInProcess = false;
         },
-        [removeTransaction.pending]:(state) => {
-            console.log("Transaction Edit pending")
+        [removeTransaction.pending]: (state) => {
+            console.log("Ștergerea tranzacției în așteptare");
         },
-        [removeTransaction.fulfilled]:(state,action) =>{
+        [removeTransaction.fulfilled]: (state, action) => {
+            const payload = action.payload || {};
+            console.log("Răspuns Tranzacție:", payload);
 
-            if(action.payload.message ==="success"){
+            if (payload.message && payload.message === "success") {
                 notifications.show({
-                    title: 'Transaction Deleted',
+                    title: 'Tranzacție Ștearsă',
                     message: 'Tranzacție ștearsă cu succes!!',
                     icon: <SuccessIcon />,
-                    radius:"lg",
+                    radius: "lg",
                     autoClose: 5000,
-                })
-                console.log("Transaction Deleted")
-            }else {
+                    color: "green",
+                });
+                console.log("Tranzacție ștearsă");
+            } else {
                 notifications.show({
-                    title: action.payload.message,
-                    message: 'Te rugăm să încerci din nou!!',
-                    radius:"lg",
-                    color:"red",
-                })
-                console.log(action.payload.message)
+                    title: "Eroare",
+                    message: payload.message || 'Te rugăm să încerci din nou!!',
+                    radius: "lg",
+                    color: "red",
+                });
+                console.log(payload.message);
             }
         },
-        [removeTransaction.rejected]:(state)=>{
+        [removeTransaction.rejected]: (state, action) => {
             notifications.show({
-                title: "Transaction Deleted failed",
+                title: "Ștergerea tranzacției a eșuat",
                 message: 'Te rugăm să încerci din nou!!',
-                radius:"lg",
-                color:"red",
-            })
+                radius: "lg",
+                color: "red",
+            });
         },
-        [fetchTransaction.pending]:(state) => {
-            state.fetchTransactionInProcess = true
-            console.log("Transaction fetch pending")
+        [fetchTransaction.pending]: (state) => {
+            state.fetchTransactionInProcess = true;
+            console.log("Preluarea tranzacției în așteptare");
         },
-        [fetchTransaction.fulfilled]:(state,action) =>{
-            if(action.payload.message ==="success"){
-                console.log(state.transactionList)
-                state.transactionList = action.payload.data
-                console.log("Transaction fetched")
-                console.log(state.transactionList)
-            }else {
-                console.log(action.payload.message)
+        [fetchTransaction.fulfilled]: (state, action) => {
+            const payload = action.payload || {};
+            console.log("Răspuns Tranzacție:", payload);
+
+            if (payload.message && payload.message === "success") {
+                state.transactionList = payload.data || [];
+                console.log("Tranzacție preluată");
+            } else {
+                console.log(payload.message);
             }
-            state.fetchTransactionInProcess =false
+            state.fetchTransactionInProcess = false;
         },
-        [fetchTransaction.rejected]:(state)=>{
-            state.fetchTransactionInProcess = false
-            console.log("Transaction fetch failed")
+        [fetchTransaction.rejected]: (state, action) => {
+            state.fetchTransactionInProcess = false;
+            console.log("Preluarea tranzacției a eșuat", action.error);
         },
     }
-})
+});
 
-export const {showTransactionForm,closeTransactionForm} = transactionSlice.actions;
+export const { showTransactionForm, closeTransactionForm } = transactionSlice.actions;
 
 export default transactionSlice;

@@ -1,12 +1,13 @@
 .chat-container {
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    max-width: 600px;
-    margin: 0 auto;
+    height: 80vh; /* Reduce height to 80% of the viewport height */
+    max-width: 400px; /* Reduce max-width to 400px */
+    margin: 50px auto; /* Center the chat container and add some margin at the top and bottom */
     border: 1px solid #ccc;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #e6ffe6; /* Light green background */
 }
 
 .chat-box {
@@ -18,15 +19,18 @@
 }
 
 .chat-message {
+    display: flex;
+    align-items: center;
     margin: 10px 0;
     padding: 10px;
     border-radius: 10px;
     max-width: 80%;
+    cursor: pointer;
 }
 
 .user {
     align-self: flex-end;
-    background-color: #007bff;
+    background-color: #28a745; /* Green for user messages */
     color: white;
 }
 
@@ -38,6 +42,7 @@
 
 .message-text {
     word-wrap: break-word;
+    flex: 1;
 }
 
 .chat-input-box {
@@ -58,11 +63,26 @@
     padding: 10px 20px;
     border: none;
     border-radius: 20px;
-    background-color: #007bff;
+    background-color: #28a745; /* Green for send button */
     color: white;
     cursor: pointer;
 }
 
 .send-button:hover {
-    background-color: #0056b3;
+    background-color: #218838;
+}
+
+.icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.back-arrow {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
 }

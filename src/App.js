@@ -25,7 +25,7 @@ function App() {
                 <Route path='/transaction' element={<RequireAuth><TransactionScreen /></RequireAuth>} />
                 <Route path='/profile' element={<RequireAuth><ProfileScreen /></RequireAuth>} />
                 <Route path='/budget' element={<RequireAuth><BudgetScreen /></RequireAuth>} />
-                <Route path='/chat' element={<RequireAuth><Chatbot /></RequireAuth>} /> {/* Adăugați componenta Chatbot */}
+                <Route path='/chat' element={<RequireAuth><Chatbot /></RequireAuth>} /> 
                 <Route path='/*' element={<p>Page not found</p>} />
             </Routes>
         </HashRouter>

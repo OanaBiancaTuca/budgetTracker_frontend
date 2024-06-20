@@ -1,45 +1,74 @@
 import axios from "axios";
-import {baseUrl} from "./config";
+import { baseUrl } from "./config";
 
-export async function createTransaction(token,amount,description,paymentType,dateTime,categoryId,accountId){
-    console.log("heer")
-    console.log(dateTime)
-    return await axios.post(`${baseUrl}/transactions`,{
-        "amount":amount,
-        "description":description,
-        "paymentType":paymentType,
-        "dateTime":dateTime,
-        "categoryId":categoryId,
-        "accountId":accountId,
-        "budgetId":accountId,
-    },{
-        headers: { Authorization: `Bearer ${token}` }
-    })
+export async function createTransaction(token, amount, description, paymentType, dateTime, categoryId, accountId) {
+    try {
+        const response = await axios.post(`${baseUrl}/transactions`, {
+            amount,
+            description,
+            paymentType,
+            dateTime,
+            categoryId,
+            accountId,
+            budgetId: accountId,
+        }, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        return response.data;
+    } catch (error) {
+        if (error.response) {
+            return error.response.data; // Ensure this returns an object with a 'message' property
+        }
+        throw error;
+    }
 }
 
-export async function updateTransaction(token,amount,description,paymentType,dateTime,categoryId,accountId,transactionId){
-    return await axios.put(`${baseUrl}/transactions?transactionId=${transactionId}`,{
-        "amount":amount,
-        "description":description,
-        "paymentType":paymentType,
-        "dateTime":dateTime,
-        "categoryId":categoryId,
-        "accountId":accountId,
-        "budgetId":accountId,
-    },{
-        headers: { Authorization: `Bearer ${token}` }
-    })
+export async function updateTransaction(token, amount, description, paymentType, dateTime, categoryId, accountId, transactionId) {
+    try {
+        const response = await axios.put(`${baseUrl}/transactions?transactionId=${transactionId}`, {
+            amount,
+            description,
+            paymentType,
+            dateTime,
+            categoryId,
+            accountId,
+            budgetId: accountId,
+        }, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        return response.data;
+    } catch (error) {
+        if (error.response) {
+            return error.response.data; // Ensure this returns an object with a 'message' property
+        }
+        throw error;
+    }
 }
 
-
-export async function getTransaction(token){
-    return await axios.get(`${baseUrl}/transactions`,{
-        headers: { Authorization: `Bearer ${token}` }
-    })
+export async function getTransaction(token) {
+    try {
+        const response = await axios.get(`${baseUrl}/transactions`, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        return response.data;
+    } catch (error) {
+        if (error.response) {
+            return error.response.data; // Ensure this returns an object with a 'message' property
+        }
+        throw error;
+    }
 }
 
-export async function deleteTransaction(token,transactionId){
-    return await axios.delete(`${baseUrl}/transactions?transactionId=${transactionId}`,{
-        headers: { Authorization: `Bearer ${token}` }
-    })
+export async function deleteTransaction(token, transactionId) {
+    try {
+        const response = await axios.delete(`${baseUrl}/transactions?transactionId=${transactionId}`, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        return response.data;
+    } catch (error) {
+        if (error.response) {
+            return error.response.data; // Ensure this returns an object with a 'message' property
+        }
+        throw error;
+    }
 }

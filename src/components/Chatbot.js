@@ -3,10 +3,14 @@ import axios from 'axios';
 import './Chatbot.css';
 import { useSelector } from 'react-redux';
 import { baseUrl } from '../api/config';
+import userIcon from '../assets/user-icon.png'; // Import iconiță utilizator
+import botIcon from '../assets/bot-icon.png'; // Import iconiță chatbot
+import backArrow from '../assets/back-arrow.png';
 
 const Chatbot = () => {
     const [messages, setMessages] = useState([]);
     const [query, setQuery] = useState('');
+    const [showOptions, setShowOptions] = useState(true);
     const token = useSelector((state) => state.user.token);
 
     const handleQuerySubmit = async (e) => {
@@ -48,11 +52,45 @@ const Chatbot = () => {
         setQuery('');
     };
 
+    const handleOptionClick = (option) => {
+        setShowOptions(false);
+        if (option === 'asistenta') {
+            setMessages([
+                ...messages,
+                { text: 'Comenzile disponibile sunt: \n1. Adaugă obiectiv\n2. Vizualizează obiectivele\n3. Șterge obiectiv\n4. Actualizează statutul datoriei\n5. Adaugă datorie\n6. Șterge datorie\n7. Schimbă scadența datoriei', sender: 'bot' }
+            ]);
+        }
+    };
+
+    if (showOptions) {
+        return (
+            <div className="chat-container">
+                <img src={backArrow} alt="Back" className="back-arrow" onClick={() => setShowOptions(true)} />
+                <div className="chat-box">
+                    <div className="chat-message bot">
+                        <img src={botIcon} alt="Bot" className="icon" />
+                        <div className="message-text">Bine ai venit! Te pot ajuta cu:</div>
+                    </div>
+                    <div className="chat-message bot" onClick={() => handleOptionClick('intrebari')}>
+                        <img src={botIcon} alt="Bot" className="icon" />
+                        <div className="message-text">Întrebări generale</div>
+                    </div>
+                    <div className="chat-message bot" onClick={() => handleOptionClick('asistenta')}>
+                        <img src={botIcon} alt="Bot" className="icon" />
+                        <div className="message-text">Asistență chatbot</div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="chat-container">
+            <img src={backArrow} alt="Back" className="back-arrow" onClick={() => setShowOptions(true)} />
             <div className="chat-box">
                 {messages.map((message, index) => (
                     <div key={index} className={`chat-message ${message.sender}`}>
+                        <img src={message.sender === 'user' ? userIcon : botIcon} alt={message.sender} className="icon" />
                         <div className="message-text">{message.text}</div>
                     </div>
                 ))}
