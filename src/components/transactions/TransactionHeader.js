@@ -1,25 +1,32 @@
-import { Title, Button, Grid, TextInput, Modal, NumberInput, Group, Text } from '@mantine/core';
+import { Title, Button, Grid, TextInput, Modal, NumberInput, Group, Text, FileInput } from '@mantine/core';
 import { DatePicker } from '@mantine/dates';
 import { ReactComponent as FilterIcon } from '../../assets/Filter_alt.svg';
 import { ReactComponent as SearchIcon } from '../../assets/Search.svg';
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { showTransactionForm } from "../../features/transactionSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { showTransactionForm, importTransactions } from "../../features/transactionSlice";
 
-export default function TransactionHeader({ onSearch, onFilter }) {
+export default function TransactionHeader({ onSearch, onFilter, onImport }) {
     const [searchValue, setSearchValue] = useState("");
     const [filterModalOpen, setFilterModalOpen] = useState(false);
+    const [importModalOpen, setImportModalOpen] = useState(false);
     const [filterValues, setFilterValues] = useState({
         minAmount: '',
         maxAmount: '',
         startDate: null,
         endDate: null
     });
+    const [pdfFile, setPdfFile] = useState(null);
+
+    const token = useSelector(state => state.user.token);
+    console.log("Token from Redux store:", token); // Log pentru a verifica token-ul
+
+    const dispatch = useDispatch();
 
     const handleInputChange = (event) => {
         const value = event.target.value;
         setSearchValue(value);
-        onSearch(value); // Pass the search value to the parent component
+        onSearch(value);
     };
 
     const handleFilterChange = (field, value) => {
@@ -41,7 +48,28 @@ export default function TransactionHeader({ onSearch, onFilter }) {
         });
     };
 
-    const dispatch = useDispatch();
+    const handleFileChange = (file) => {
+        setPdfFile(file);
+    };
+
+    const handleImport = async () => {
+        if (!pdfFile) return;
+
+        try {
+            console.log("Token in handleImport:", token); // Log pentru a verifica token-ul înainte de import
+            const response = await dispatch(importTransactions({ file: pdfFile, token })).unwrap();
+
+            if (response.message === "success") {
+                onImport(response.transactions);
+                setImportModalOpen(false);
+                setPdfFile(null);
+            } else {
+                console.error("Import failed", response.message);
+            }
+        } catch (error) {
+            console.error("Error importing PDF", error);
+        }
+    };
 
     return (
         <div style={{ marginBottom: 10 }}>
@@ -73,6 +101,9 @@ export default function TransactionHeader({ onSearch, onFilter }) {
                         <Grid.Col md={12} lg={4}>
                             <Button radius="md" style={{ margin: 8 }} leftIcon={<FilterIcon />} variant="outline" color='green' onClick={() => setFilterModalOpen(true)}>
                                 Filtrare
+                            </Button>
+                            <Button radius="md" style={{ margin: 8 }} leftIcon={<FilterIcon />} variant="outline" color='blue' onClick={() => setImportModalOpen(true)}>
+                                Import PDF
                             </Button>
                         </Grid.Col>
                     </Grid>
@@ -138,6 +169,34 @@ export default function TransactionHeader({ onSearch, onFilter }) {
                             resetFilterValues();
                         }}>Anulează</Button>
                         <Button style={{ backgroundColor: "#004d00" }} onClick={applyFilters}>Aplică filtre</Button>
+                    </Group>
+                </div>
+            </Modal>
+
+            <Modal
+                opened={importModalOpen}
+                onClose={() => setImportModalOpen(false)}
+                title="Importă Tranzacții din PDF"
+                overlayProps={{
+                    color: "blue",
+                    opacity: 0.55,
+                    blur: 3,
+                }}
+                size="md"
+                centered
+                radius="md"
+                withCloseButton={false}
+            >
+                <div style={{ padding: 20 }}>
+                    <FileInput
+                        label="Alege PDF"
+                        placeholder="Alege fișierul PDF"
+                        onChange={handleFileChange}
+                        accept="application/pdf"
+                    />
+                    <Group position="apart" mt="md">
+                        <Button variant="outline" color="red" onClick={() => setImportModalOpen(false)}>Anulează</Button>
+                        <Button style={{ backgroundColor: "#004d00" }} onClick={handleImport}>Importă</Button>
                     </Group>
                 </div>
             </Modal>

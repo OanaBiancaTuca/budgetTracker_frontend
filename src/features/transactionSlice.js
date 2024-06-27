@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createTransaction, deleteTransaction, getTransaction, updateTransaction } from "../api/transactionService";
+import { createTransaction, deleteTransaction, getTransaction, updateTransaction, importTransactionsPdf } from "../api/transactionService";
 import { notifications } from "@mantine/notifications";
 import { ReactComponent as SuccessIcon } from "../assets/success-icon.svg";
 
@@ -56,6 +56,15 @@ export const removeTransaction = createAsyncThunk('transaction/removeTransaction
     }
 });
 
+export const importTransactions = createAsyncThunk('transaction/importTransactions', async (body) => {
+    try {
+        const response = await importTransactionsPdf(body.file, body.token);
+        return response;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+});
+
 const transactionSlice = createSlice({
     name: "transaction",
     initialState: {
@@ -64,6 +73,7 @@ const transactionSlice = createSlice({
         addTransactionInProcess: false,
         editTransactionInProcess: false,
         fetchTransactionInProcess: false,
+        importTransactionInProcess: false,
         transactionList: []
     },
     reducers: {
@@ -208,9 +218,49 @@ const transactionSlice = createSlice({
             state.fetchTransactionInProcess = false;
             console.log("Preluarea tranzacției a eșuat", action.error);
         },
+        [importTransactions.pending]: (state) => {
+            state.importTransactionInProcess = true;
+            console.log("Import tranzacție în așteptare");
+        },
+        [importTransactions.fulfilled]: (state, action) => {
+            const payload = action.payload || {};
+            console.log("Răspuns Import Tranzacție:", payload);
+
+            if (payload.message && payload.message === "success") {
+                notifications.show({
+                    title: 'Tranzacții Importate',
+                    message: 'Tranzacții importate cu succes!!',
+                    icon: <SuccessIcon />,
+                    radius: "lg",
+                    autoClose: 5000,
+                    color: "green",
+                });
+                state.transactionList = payload.transactions || [];
+                console.log("Tranzacții importate");
+            } else {
+                notifications.show({
+                    title: "Eroare",
+                    message: payload.message || 'Te rugăm să încerci din nou!!',
+                    radius: "lg",
+                    color: "red",
+                });
+                console.log(payload.message);
+            }
+            state.importTransactionInProcess = false;
+        },
+        [importTransactions.rejected]: (state, action) => {
+            state.importTransactionInProcess = false;
+            console.log("Importul tranzacțiilor a eșuat", action.error);
+            notifications.show({
+                title: "Importul tranzacțiilor a eșuat",
+                message: 'Te rugăm să încerci din nou!!',
+                radius: "lg",
+                color: "red",
+            });
+        },
     }
 });
 
 export const { showTransactionForm, closeTransactionForm } = transactionSlice.actions;
 
-export default transactionSlice;
+export default transactionSlice.reducer;

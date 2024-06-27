@@ -1,51 +1,50 @@
 import React, { useState } from 'react';
-import { FaPlus,FaMoneyBill,FaUser,FaCalendarAlt } from 'react-icons/fa';
-import { Modal,  Button, TextInput, Title,Notification } from '@mantine/core';
+import { FaPlus, FaMoneyBill, FaUser, FaCalendarAlt } from 'react-icons/fa';
+import { Modal, Button, TextInput, Title, Notification } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { useSelector } from 'react-redux';
 
-function DebtForm({isOpen,onClose}) {
-  const token  = useSelector(state => state.user.token);
+function DebtForm({ isOpen, onClose }) {
+  const token = useSelector(state => state.user.token);
 
-  const amount=useStoreState((state)=>state.amount)
-  const moneyFrom=useStoreState((state)=>state.moneyFrom)
-  const dueDate=useStoreState((state)=>state.dueDate)
+  const amount = useStoreState((state) => state.amount);
+  const moneyFrom = useStoreState((state) => state.moneyFrom);
+  const dueDate = useStoreState((state) => state.dueDate);
   const status = useStoreState((state) => state.status);
 
-  const setAmount=useStoreActions((action)=>action.setAmount)
-  const setMoneyFrom=useStoreActions((action)=>action.setMoneyFrom)
-  const setdueDate=useStoreActions((action)=>action.setdueDate)
-  // const setStatus=useStoreActions((action)=>action.setStatus)
-  const addDebt=useStoreActions((action)=>action.addDebt)
-  const [newNot,setnewNot]=useState(false);
-  const [errN,setErrN]=useState('');
-  const [errA,setErrA]=useState('');
-  const [errD,setErrD]=useState('');
+  const setAmount = useStoreActions((action) => action.setAmount);
+  const setMoneyFrom = useStoreActions((action) => action.setMoneyFrom);
+  const setdueDate = useStoreActions((action) => action.setdueDate);
+  const addDebt = useStoreActions((action) => action.addDebt);
+  const [newNot, setnewNot] = useState(false);
+  const [errN, setErrN] = useState('');
+  const [errA, setErrA] = useState('');
+  const [errD, setErrD] = useState('');
 
   const handleSaveModal = async (e) => {
     e.preventDefault();
-    if(dueDate.toDateString() === new Date().toDateString()){
+    if (dueDate.toDateString() === new Date().toDateString()) {
       setErrD("Please select a valid date");
-      setTimeout(()=>{
+      setTimeout(() => {
         setErrD('')
-      },1000);
+      }, 1000);
       return;
     }
-    if(!isNaN(moneyFrom) || !moneyFrom.length ){
+    if (!isNaN(moneyFrom) || !moneyFrom.length) {
       console.log(!isNaN(moneyFrom))
       setErrN("Please enter a valid name");
-      setTimeout(()=>{
+      setTimeout(() => {
         setErrN('')
-      },1000);
+      }, 1000);
       return;
 
     }
-    if(!amount || isNaN(amount)){
+    if (!amount || isNaN(amount)) {
       setErrA("please enter a valid amount");
-      setTimeout(()=>{
+      setTimeout(() => {
         setErrA('')
-      },1000);
+      }, 1000);
       return;
 
     }
@@ -60,27 +59,24 @@ function DebtForm({isOpen,onClose}) {
       moneyFrom: moneyFrom,
       status: status,
     };
-    // console.log(NDebt);
-    addDebt({...NDebt,token:token});
-    // console.log("Added")
+    addDebt({ ...NDebt, token: token });
     onClose();
     setnewNot(true);
-    setTimeout(()=>{
+    setTimeout(() => {
       setnewNot(false)
-    },1000);
-
+    }, 1000);
   };
-  
+
   return (
     <>
       {<Modal
         opened={isOpen}
         onClose={onClose}
         centered
-        position="center" 
+        position="center"
 
         title={
-          <Title size="32" style={{textAlign:"center"}}>
+          <Title size="32" style={{ textAlign: "center" }}>
             Adaugă datorie
           </Title>
         }
@@ -95,68 +91,62 @@ function DebtForm({isOpen,onClose}) {
       >
         <div>
           <DatePickerInput
-              radius="md"
-              // style={{marginTop: "2px"}}
-              dropdownType="modal"
-              label="Scadența"
-              value={dueDate}
-              onChange={setdueDate}
-              error={errD}
-              icon={<FaCalendarAlt size="1.1rem" stroke={1.5} />}
+            radius="md"
+            dropdownType="modal"
+            label="Scadența"
+            value={dueDate}
+            onChange={setdueDate}
+            error={errD}
+            icon={<FaCalendarAlt size="1.1rem" stroke={1.5} />}
+          />
 
-            />
-
-          <TextInput radius="md" style={{marginTop:"7px"}}
-              label="De la"
-              value={moneyFrom}
-              placeholder='Ex : Oana'
-              data-autofocus
-              // required
-              withAsterisk
-              error={errN}
-              onChange={(event) => setMoneyFrom(event.currentTarget.value)}
-              icon={<FaUser size="1.1rem" stroke={1.5}/>}
-            />
-            <TextInput radius="md" style={{marginTop:"7px"}}
-              withAsterisk 
-              label="Valoarea"
-              value={amount}
-              placeholder="1000"
-              // required
-              error={errA}
-              onChange={(event) => setAmount(event.currentTarget.value)}
-              icon={<FaMoneyBill size="1.1rem" stroke={1.5}/>}
-            />
-
+          <TextInput radius="md" style={{ marginTop: "7px" }}
+            label="De la"
+            value={moneyFrom}
+            placeholder='Ex : Oana'
+            data-autofocus
+            withAsterisk
+            error={errN}
+            onChange={(event) => setMoneyFrom(event.currentTarget.value)}
+            icon={<FaUser size="1.1rem" stroke={1.5} />}
+          />
+          <TextInput radius="md" style={{ marginTop: "7px" }}
+            withAsterisk
+            label="Valoarea"
+            value={amount}
+            placeholder="1000"
+            error={errA}
+            onChange={(event) => setAmount(event.currentTarget.value)}
+            icon={<FaMoneyBill size="1.1rem" stroke={1.5} />}
+          />
         </div>
-        <div style={{ 
-            display: 'flex',
-            justifyContent: 'space-between',
-            marginTop: '16px' 
-              }}>
-          <Button 
-            onClick={onClose} 
-            fullWidth 
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          marginTop: '16px'
+        }}>
+          <Button
+            onClick={onClose}
+            fullWidth
             color='gray'
             style={{ marginLeft: '10px', width: '45%' }} >
             Anulează
           </Button>
-          <Button 
+          <Button
             onClick={handleSaveModal}
-            fullWidth 
-            style={{ marginRight: '10px', width: '45%',background:"#004d00" }} type='submit'>
+            fullWidth
+            style={{ marginRight: '10px', width: '45%', background: "#004d00" }} type='submit'>
             Salvează
           </Button>
         </div>
-
-      </Modal> }
+      </Modal>}
       {newNot &&
         <Notification
           transition="slide-up"
           title="O noua datorie a fost adăugată cu succes!!!"
           color='green'
           icon={
-              <FaPlus />}
+            <FaPlus />}
           style={{ position: 'fixed', bottom: '30px', right: '30px' }}
         />
       }

@@ -10,7 +10,7 @@ import TransactionScreen from './screens/TransactionScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import BudgetScreen from "./screens/BudgetScreen";
 import DebtScreen from './screens/DebtScreen';
-import Chatbot from "./components/Chatbot"; // Corect importul componentei Chatbot
+import Chatbot from "./components/Chatbot"; 
 
 function App() {
     return (

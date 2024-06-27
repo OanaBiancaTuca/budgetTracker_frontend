@@ -17,7 +17,7 @@ export async function createTransaction(token, amount, description, paymentType,
         return response.data;
     } catch (error) {
         if (error.response) {
-            return error.response.data; // Ensure this returns an object with a 'message' property
+            return error.response.data;
         }
         throw error;
     }
@@ -39,7 +39,7 @@ export async function updateTransaction(token, amount, description, paymentType,
         return response.data;
     } catch (error) {
         if (error.response) {
-            return error.response.data; // Ensure this returns an object with a 'message' property
+            return error.response.data;
         }
         throw error;
     }
@@ -53,7 +53,7 @@ export async function getTransaction(token) {
         return response.data;
     } catch (error) {
         if (error.response) {
-            return error.response.data; // Ensure this returns an object with a 'message' property
+            return error.response.data;
         }
         throw error;
     }
@@ -61,13 +61,37 @@ export async function getTransaction(token) {
 
 export async function deleteTransaction(token, transactionId) {
     try {
+        console.log("Token delete:", token)
         const response = await axios.delete(`${baseUrl}/transactions?transactionId=${transactionId}`, {
             headers: { Authorization: `Bearer ${token}` }
         });
         return response.data;
     } catch (error) {
         if (error.response) {
-            return error.response.data; // Ensure this returns an object with a 'message' property
+            return error.response.data;
+        }
+        throw error;
+    }
+}
+
+export async function importTransactionsPdf(file, token) {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+        console.log("Token before import:", token); // Log pentru a verifica token-ul înainte de import
+        const response = await axios.post(`${baseUrl}/transactions/import-pdf`, formData, {
+            headers: { 
+                Authorization: `Bearer ${token}`,
+                "Content-Type": 'multipart/form-data'
+            }
+        });
+        console.log("Response data:", response.data); // Log pentru a verifica răspunsul
+        return response.data;
+    } catch (error) {
+        if (error.response) {
+            console.log("Error response:", error.response); // Log pentru a verifica răspunsul de eroare
+            return error.response.data;
         }
         throw error;
     }

@@ -17,6 +17,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.4.0",
     "chart.js": "^4.3.0",
+    "date-fns": "^3.6.0",
     "dayjs": "^1.11.9",
     "easy-peasy": "^6.0.0",
     "faker": "^6.6.6",

@@ -20,7 +20,7 @@ const rootReducer = combineReducers({
     user: userSlice.reducer,
     account: accountSlice.reducer,
     category: categorySlice.reducer,
-    transaction: transactionSlice.reducer,
+    transaction: transactionSlice,
     budget: budgetSlice.reducer,
     goal: goalSlice.reducer,
     logout: logoutReducer,

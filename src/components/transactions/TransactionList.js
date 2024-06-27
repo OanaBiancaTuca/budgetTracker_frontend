@@ -2,7 +2,6 @@ import { Badge, Table, Text } from '@mantine/core';
 import ArrowRIcon from '../../assets/Arrow_alt_ltop.svg';
 import ArrowGIcon from '../../assets/Arrow_alt_ldown.svg';
 import Edit from '../../assets/Edit.svg';
-import { useSelector } from "react-redux";
 import TransactionEditForm from "./TransactionEditForm";
 import { useState } from "react";
 
@@ -54,6 +53,14 @@ export default function TransactionList({ filteredTransactions }) {
     };
 
     const accountDetails = (account, paymentType) => {
+        if (!account) {
+            return (
+                <div style={{ marginBottom: 12 }}>
+                    <Text fw={700} fz="md" style={{ marginBottom: 5 }}>Account not available</Text>
+                    <Text fw={500} c="dimmed" fz="sm">{paymentType}</Text>
+                </div>
+            );
+        }
         return (
             <div style={{ marginBottom: 12 }}>
                 <Text fw={700} fz="md" style={{ marginBottom: 5 }}>{account.name}</Text>
