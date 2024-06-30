@@ -67,11 +67,12 @@ const accountSlice = createSlice({
         [addAccount.fulfilled]: (state, action) => {
             if (action.payload.message === "success") {
                 notifications.show({
-                    title: 'Account Added',
+                    title: 'Cont adăugat',
                     message: 'Contul tău a fost adăugat cu succes!',
                     icon: <SuccessIcon />,
                     radius: "lg",
                     autoClose: 5000,
+                    color:"green",
                 });
             } else {
                 notifications.show({
@@ -88,7 +89,7 @@ const accountSlice = createSlice({
         [addAccount.rejected]: (state, action) => {
             state.addAccountInProcess = false;
             notifications.show({
-                title: "Account Creation Failed",
+                title: "Creare eșuată a contului",
                 message: action.error.message || 'Te rugăm să încerci din nou!!!',
                 radius: "lg",
                 color: "red",
@@ -108,18 +109,19 @@ const accountSlice = createSlice({
         },
         [fetchAccount.rejected]: (state, action) => {
             state.fetchAccountInProcess = false;
-            console.log("Account fetch failed");
+            console.log("Eșuare la preluarea contului");
         },
         [changeAccount.pending]: () => {
-            console.log("Account update pending");
+            console.log("Actualizare cont în așteptare");
         },
         [changeAccount.fulfilled]: (state, action) => {
             if (action.payload.message === "success") {
                 notifications.show({
-                    title: 'Account Updated',
+                    title: 'Cont actualizat',
                     message: 'Contul tău a fost actualizat cu succes!!',
                     icon: <SuccessIcon />,
                     radius: "lg",
+                    color:"green",
                     autoClose: 5000,
                 });
             } else {
@@ -136,7 +138,7 @@ const accountSlice = createSlice({
         [changeAccount.rejected]: () => {
             console.log("Actualizarea contului a eșuat");
             notifications.show({
-                title: "Account Update Failed",
+                title: "Actualizare eșuată",
                 message: 'Te rugăm să încerci din nou!!',
                 radius: "lg",
                 color: "red",
@@ -144,15 +146,16 @@ const accountSlice = createSlice({
             });
         },
         [removeAccount.pending]: () => {
-            console.log("Account delete pending");
+            console.log("Țtergere cont în așteptare");
         },
         [removeAccount.fulfilled]: (state, action) => {
             if (action.payload.message === "success") {
                 notifications.show({
-                    title: 'Account Deleted',
+                    title: 'Cont șters',
                     message: 'Contul tău a fost șters cu succes!',
                     icon: <SuccessIcon />,
                     radius: "lg",
+                    color:"green",
                     autoClose: 5000,
                 });
             } else {
@@ -167,7 +170,7 @@ const accountSlice = createSlice({
             }
         },
         [removeAccount.rejected]: () => {
-            console.log("Account Delete failed");
+            console.log("Ștergere cont eșuată");
             notifications.show({
                 title: "Ștergerea contului a eșuat",
                 message: 'Te rugăm să încerci din nou!!',

@@ -179,12 +179,12 @@ return (
                   {...form.getInputProps('accountId')}
           />
           <Select radius="md" style={{ marginTop: 16 }}
-            label="Payment Type"
+            label="Tipul plății"
             withAsterisk
             disabled={form.values.accountId===''}
             clearable
             nothingFound={paymentTypeDate().length===0 ?  <Text>No data found</Text> : <Loader size="sm" variant="dots" />}
-            placeholder="Select Payment Type"
+            placeholder="Selectează tipul plății"
             data={paymentTypeDate()}
             {...form.getInputProps('paymentType')}
           />
@@ -214,7 +214,7 @@ return (
                 color: "red",
                 blur: 3,
             }}
-            size="sm" withinPortal={true} closeOnClickOutside={false} trapFocus={false} withOverlay={false} opened={showDiscard} onClose={handleDiscardCancel} radius="lg" centered  withCloseButton={false} title="Confirm Discard">
+            size="sm" withinPortal={true} closeOnClickOutside={false} trapFocus={false} withOverlay={false} opened={showDiscard} onClose={handleDiscardCancel} radius="lg" centered  withCloseButton={false} title="Confirmă anularea">
             <Text size={"sm"} c={"dimmed"} style={{marginBottom:10}}>Se vor pierde toate informațiile introduse.</Text>
             <Grid
             >

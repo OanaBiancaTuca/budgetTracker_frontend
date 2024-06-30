@@ -122,7 +122,7 @@ function BudgetEditForm(props) {
                     color: "red",
                     blur: 3,
                 }}
-                size="auto" withinPortal={true} closeOnClickOutside={false} trapFocus={false} withOverlay={false} opened={showDelete} onClose={handleDeleteCancle} radius="lg" centered  withCloseButton={false} title="Confirm Delete">
+                size="auto" withinPortal={true} closeOnClickOutside={false} trapFocus={false} withOverlay={false} opened={showDelete} onClose={handleDeleteCancle} radius="lg" centered  withCloseButton={false} title="Confirmă ștergerea">
                 <Text size={"sm"} c={"dimmed"} style={{marginBottom:10}}>Acest buget va fi șters!</Text>
                 <Grid
                 >

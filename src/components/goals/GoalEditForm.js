@@ -64,7 +64,7 @@ export default function GoalEditForm(props){
             blur: 3,
         }} radius="lg" withCloseButton={false} closeOnClickOutside={false} size="sm" opened={props.open} onClose={() => { props.close() }} centered>
             <LoadingOverlay visible={addGoalInProcess} overlayBlur={2}/>
-            <Title style={{ marginLeft: 10 }} order={3}>Edit Goal</Title>
+            <Title style={{ marginLeft: 10 }} order={3}>Editare Obiectiv</Title>
             <Container size="md">
                 <form onSubmit={form.onSubmit((values) => handleSubmit())}>
                     <TextInput radius="md" style={{ marginTop: 16 }}

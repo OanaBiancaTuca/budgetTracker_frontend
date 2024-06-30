@@ -34,7 +34,7 @@ export default function Layout(props){
                        <Title style={{ margin: 5 }} order={2}>{props.title}</Title>
                        <div style={{textAlign:"center",alignSelf:"center",marginTop:50}}>
                            <NoDataSVG/>
-                           <Text>You Haven't Created Any {props.title} Yet.</Text>
+                           <Text>Nu ai creat  {props.title} până acum.</Text>
                        </div>
                    </div>
                    }

@@ -227,14 +227,14 @@ export default function TransactionEditForm(props) {
                             </Radio.Group>
                             <Grid style={{ marginTop: 16 }} gutter={5} gutterXs="md" gutterMd="xl" gutterXl={50}>
                                 <Grid.Col span={"auto"}>
-                                    <Button radius="md" color="red" fullWidth onClick={() => setShowDiscard(true)} >Delete</Button>
+                                    <Button radius="md" color="red" fullWidth onClick={() => setShowDiscard(true)} >Șterge</Button>
                                 </Grid.Col>
                                 <Grid.Col span={"auto"}>
-                                    <Button radius="md" variant={"default"} fullWidth onClick={() => handleCancel() }>Cancel</Button>
+                                    <Button radius="md" variant={"default"} fullWidth onClick={() => handleCancel() }>Anulează</Button>
                                 </Grid.Col>
                                 <Grid.Col span={"auto"}>
                                     <Button loading={editTransactionInProcess} radius="md" fullWidth type="submit"   style={{ background:"#004d00"}}
-                                    >Save</Button>
+                                    >Salvează</Button>
                                 </Grid.Col>
                             </Grid>
                         </Grid.Col>
@@ -245,7 +245,7 @@ export default function TransactionEditForm(props) {
                         color: "red",
                         blur: 3,
                     }}
-                    size="sm" withinPortal={true} closeOnClickOutside={false} trapFocus={false} withOverlay={false} opened={showDiscard} onClose={handleDiscardCancel} radius="lg" centered  withCloseButton={false} title="Confirm Delete">
+                    size="sm" withinPortal={true} closeOnClickOutside={false} trapFocus={false} withOverlay={false} opened={showDiscard} onClose={handleDiscardCancel} radius="lg" centered  withCloseButton={false} title="Confirmă Ștergerea">
                     <Text size={"sm"} c={"dimmed"} style={{marginBottom:10}}>Tranzacția va fi ștearsă.</Text>
                     <Grid
                     >

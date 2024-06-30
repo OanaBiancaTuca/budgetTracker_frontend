@@ -104,6 +104,7 @@ const initialState = {
     forgotPasswordInProgress: false,
     signupError: null,
     loginError: null,
+    otpError: null,
 };
 
 // User slice
@@ -124,6 +125,10 @@ export const userSlice = createSlice({
         closeForgotPasswordForm: (state) => { state.displayForgotPasswordForm = false },
         closeSignupForm: (state) => { state.displaySignupForm = false },
         closeSigninForm: (state) => { state.displaySigninForm = false },
+        setOtpError: (state, action) => { state.otpError = action.payload },
+        setDisplayUserDetailsForm: (state, action) => { state.displayUserDetailsForm = action.payload },
+        setDisplayOtpForm: (state, action) => { state.displayOtpForm = action.payload },
+        setDisplayPasswordForm: (state, action) => { state.displayPasswordForm = action.payload },
     },
     extraReducers: (builder) => {
         builder
@@ -136,11 +141,12 @@ export const userSlice = createSlice({
                     state.displayOtpForm = false;
                     state.displayPasswordForm = false;
                     notifications.show({
-                        title: 'Account Created Successfully',
+                        title: 'Cont creat',
                         message: 'Cont creat cu succes! Te poti loga în cont utilizând emailul și parola!',
                         icon: <SuccessIcon />,
                         radius: "lg",
                         autoClose: 5000,
+                        color:"green",
                     });
                 } else {
                     notifications.show({
@@ -155,7 +161,7 @@ export const userSlice = createSlice({
             .addCase(createAccount.rejected, (state) => {
                 state.signupInProgress = false;
                 notifications.show({
-                    title: 'Request Failed',
+                    title: 'Cerere eșuată',
                     message: 'Te rugăm să încerci din nou!!',
                     radius: "lg",
                     color: "red",
@@ -181,7 +187,7 @@ export const userSlice = createSlice({
             .addCase(loginAccount.rejected, (state) => {
                 state.signinInProgress = false;
                 notifications.show({
-                    title: "Something went wrong ",
+                    title: "Ceva nu a mers bine ",
                     message: 'Te rugăm să încerci din nou!!',
                     radius: "lg",
                     color: "red",
@@ -212,7 +218,7 @@ export const userSlice = createSlice({
             .addCase(validateToken.rejected, (state) => {
                 state.token = null;
                 notifications.show({
-                    title: 'Session expired',
+                    title: 'Sesiunea a expirat',
                     message: 'Te rog, loghează-te din nou!!',
                     radius: "lg",
                     color: "red",
@@ -225,11 +231,12 @@ export const userSlice = createSlice({
                     state.displayUserDetailsForm = false;
                     state.displayOtpForm = true;
                     notifications.show({
-                        title: 'Verification Code Sent',
+                        title: 'Cod de verificare trimis',
                         message: 'Codul de verificare a fost trimis pe email!',
                         icon: <SuccessIcon />,
                         radius: "lg",
                         autoClose: 5000,
+                        color:"green",
                     });
                 } else {
                     notifications.show({
@@ -244,7 +251,7 @@ export const userSlice = createSlice({
             .addCase(sendVerificationCode.rejected, (state) => {
                 state.signupInProgress = false;
                 notifications.show({
-                    title: 'Request Failed',
+                    title: 'Cerere eșuată',
                     message: 'Te rugăm să încerci din nou!!',
                     radius: "lg",
                     color: "red",
@@ -258,11 +265,12 @@ export const userSlice = createSlice({
                     state.displayOtpForm = false;
                     state.displayPasswordForm = true;
                     notifications.show({
-                        title: 'Verified Successfully',
+                        title: 'Verificare cu succes',
                         message: 'Email verificat cu succes!',
                         icon: <SuccessIcon />,
                         radius: "lg",
                         autoClose: 5000,
+                        color:"green",
                     });
                 } else {
                     notifications.show({
@@ -272,18 +280,24 @@ export const userSlice = createSlice({
                         color: "red",
                         autoClose: 5000,
                     });
+                    state.displayUserDetailsForm = true;
+                    state.displayOtpForm = false;
+                    state.displayPasswordForm = false;
                 }
             })
             .addCase(verifyCode.rejected, (state) => {
                 state.signupInProgress = false;
                 state.forgotPasswordInProgress = false;
                 notifications.show({
-                    title: 'Request Failed',
+                    title: 'Cerearea a eșuat',
                     message: 'Te rugăm să încerci din nou!!',
                     radius: "lg",
                     color: "red",
                     autoClose: 5000,
                 });
+                state.displayUserDetailsForm = true;
+                state.displayOtpForm = false;
+                state.displayPasswordForm = false;
             })
             .addCase(newPassword.fulfilled, (state, action) => {
                 state.forgotPasswordInProgress = false;
@@ -293,11 +307,12 @@ export const userSlice = createSlice({
                     state.displayPasswordForm = false;
                     state.displayMailForm = true;
                     notifications.show({
-                        title: 'Password Reset Successfully',
+                        title: 'Parolă resetată cu succes',
                         message: 'Acum vă puteți loga cu noua parolă!',
                         icon: <SuccessIcon />,
                         radius: "lg",
                         autoClose: 5000,
+                        color:"green",
                     });
                 } else {
                     notifications.show({
@@ -312,7 +327,7 @@ export const userSlice = createSlice({
             .addCase(newPassword.rejected, (state) => {
                 state.forgotPasswordInProgress = false;
                 notifications.show({
-                    title: 'Request Failed',
+                    title: 'Cererea a eșuat',
                     message: 'Te rugăm să încerci din nou!!',
                     radius: "lg",
                     color: "red",
@@ -325,7 +340,7 @@ export const userSlice = createSlice({
                     state.displayMailForm = false;
                     state.displayOtpForm = true;
                     notifications.show({
-                        title: 'Verification Code Sent',
+                        title: 'Cod verificare trimis',
                         message: 'Codul de verificare a fost trimis pe email!',
                         icon: <SuccessIcon />,
                         radius: "lg",
@@ -363,6 +378,10 @@ export const {
     closeSigninForm,
     openForgotPasswordForm,
     closeForgotPasswordForm,
+    setOtpError,
+    setDisplayUserDetailsForm,
+    setDisplayOtpForm,
+    setDisplayPasswordForm,
 } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -80,11 +80,11 @@ export default function AccountForm(props) {
                     />
                     <Checkbox.Group style={{marginTop:16}}
                         {...form.getInputProps('paymentTypes')}
-                        label="Payment Type"
+                        label="Tipul plății"
                         withAsterisk
                     >
                         <Group style={{marginTop:10}} mt="xs">
-                            <Checkbox  value="UPI" label="UPI" />
+                            <Checkbox  value="UPI" label="Cash" />
                             <Checkbox  value="Debit Card" label="Debit Card" />
                             <Checkbox  value="Credit Card" label="Credit Card" />
                             <Checkbox  value="Net Banking" label="Net Banking" />
@@ -105,7 +105,7 @@ export default function AccountForm(props) {
                     color: "red",
                     blur: 3,
                 }}
-                size="auto" withinPortal={true} closeOnClickOutside={false} trapFocus={false} withOverlay={false} opened={showDiscard} onClose={handleDiscardCancel} radius="lg" centered  withCloseButton={false} title="Confirm Discard">
+                size="auto" withinPortal={true} closeOnClickOutside={false} trapFocus={false} withOverlay={false} opened={showDiscard} onClose={handleDiscardCancel} radius="lg" centered  withCloseButton={false} title="Confirmă anularea ">
                 <Text size={"sm"} c={"dimmed"} style={{marginBottom:10}}>Se va pierde tot conținutul completat</Text>
                 <Grid
                 >

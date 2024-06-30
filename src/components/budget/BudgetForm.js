@@ -101,7 +101,7 @@ function BudgetForm(props) {
                     color: "red",
                     blur: 3,
                 }}
-                size="auto" withinPortal={true} closeOnClickOutside={false} trapFocus={false} withOverlay={false} opened={showCancel} onClose={handleCancelConfirm} radius="lg" centered  withCloseButton={false} title="Confirm">
+                size="auto" withinPortal={true} closeOnClickOutside={false} trapFocus={false} withOverlay={false} opened={showCancel} onClose={handleCancelConfirm} radius="lg" centered  withCloseButton={false} title="Confirmă">
                 <Text size={"sm"} c={"dimmed"} style={{marginBottom:10}}>Veți pierde toate datele introduse</Text>
                 <Grid
                 >

@@ -106,7 +106,7 @@ export default function CategoryForm(props) {
             {...form.getInputProps("type")}
           >
             <Group mt="xs">
-              <Radio value="expense" label="Cheltuiala" />
+              <Radio value="expense" label="Cheltuială" />
               <Radio value="income" label="Venit" />
             </Group>
           </Radio.Group>
@@ -120,7 +120,7 @@ export default function CategoryForm(props) {
           >
             <Grid.Col span={"auto"}>
               <Button radius="md" variant={"default"} fullWidth onClick={() => setShowDiscard(true)}>
-                Anulati
+                Anulați
               </Button>
             </Grid.Col>
             <Grid.Col span={"auto"}>
@@ -137,8 +137,8 @@ export default function CategoryForm(props) {
             color: "red",
             blur: 3,
           }}
-          size="auto" withinPortal={true} closeOnClickOutside={false} trapFocus={false} withOverlay={false} opened={showDiscard} onClose={handleDiscardCancel} radius="lg" centered  withCloseButton={false} title="Confirm Discard">
-        <Text size={"sm"} c={"dimmed"} style={{marginBottom:10}}>Veti pierde toate informatiile introduse</Text>
+          size="auto" withinPortal={true} closeOnClickOutside={false} trapFocus={false} withOverlay={false} opened={showDiscard} onClose={handleDiscardCancel} radius="lg" centered  withCloseButton={false} title="Confirmă anularea">
+        <Text size={"sm"} c={"dimmed"} style={{marginBottom:10}}>Veți pierde toate informațiile introduse</Text>
         <Grid
         >
           <Grid.Col span={"auto"}>

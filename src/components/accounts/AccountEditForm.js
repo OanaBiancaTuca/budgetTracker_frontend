@@ -94,11 +94,11 @@ export default function AccountEditForm(props) {
                     />
                     <Checkbox.Group style={{marginTop:16}}
                                     {...form.getInputProps('paymentTypes')}
-                                    label="Payment Type"
+                                    label="Tipul Platii"
                                     withAsterisk
                     >
                         <Group style={{marginTop:10}} mt="xs">
-                            <Checkbox  value="UPI" label="UPI" />
+                            <Checkbox  value="UPI" label="Cash" />
                             <Checkbox  value="Debit Card" label="Debit Card" />
                             <Checkbox  value="Credit Card" label="Credit Card" />
                             <Checkbox  value="Net Banking" label="Net Banking" />
@@ -109,7 +109,7 @@ export default function AccountEditForm(props) {
                             <Button radius="md" color="red" fullWidth onClick={() => setShowDiscard(true)} >Șterge</Button>
                         </Grid.Col>
                         <Grid.Col span={"auto"}>
-                            <Button radius="md" variant={"default"} onClick={() => handleCancel()} fullWidth>Cancel</Button>
+                            <Button radius="md" variant={"default"} onClick={() => handleCancel()} fullWidth>Anulează</Button>
                         </Grid.Col>
                         <Grid.Col span={"auto"}>
                             <Button radius="md" fullWidth type="submit"  style={{ background:"#004d00"}}>Salvează</Button>
@@ -122,13 +122,13 @@ export default function AccountEditForm(props) {
                     color: "red",
                     blur: 3,
                 }}
-                size="auto" withinPortal={true} closeOnClickOutside={false} trapFocus={false} withOverlay={false} opened={showDiscard} onClose={handleDiscardCancel} radius="lg" centered  withCloseButton={false} title="Confirm Delete">
+                size="auto" withinPortal={true} closeOnClickOutside={false} trapFocus={false} withOverlay={false} opened={showDiscard} onClose={handleDiscardCancel} radius="lg" centered  withCloseButton={false} title="Confirma Stergerea">
                 <Text size={"sm"} c={"dimmed"} style={{marginBottom:10}}>Contul va fi șters.</Text>
                 <Grid
                 >
                     <Grid.Col span={"auto"}>
                         <Button radius="md" color="gray" fullWidth  onClick={() => setShowDiscard(false)}>
-                            Nu, Cancel
+                            Nu, anuleaza
                         </Button>
                     </Grid.Col>
                     <Grid.Col span={"auto"}>

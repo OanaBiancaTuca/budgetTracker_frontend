@@ -75,15 +75,16 @@ const budgetSlice = createSlice({
             state.addBudgetInProcess = false;
             if (action.payload?.message === "success") {
                 notifications.show({
-                    title: 'Budget Created',
+                    title: 'Buget creat',
                     message: 'Buget creat cu succes!!',
                     icon: <SuccessIcon />,
                     radius: "lg",
                     autoClose: 5000,
+                    color:"green",
                 });
             } else {
                 notifications.show({
-                    title: "Something went wrong",
+                    title: "Ceva nu a mers bine..",
                     message: 'Te rugăm să încerci din nou!!',
                     radius: "lg",
                     color: "red",
@@ -94,7 +95,7 @@ const budgetSlice = createSlice({
         },
         [addBudget.rejected]: (state) => {
             state.addBudgetInProcess = false;
-            alert("Budget Create failed,Try again");
+            alert("Crearea bugetului eșuată, încearcă din nou");
         },
         [editBudget.pending]: (state) => {
             state.addBudgetEditInProcess = true;
@@ -103,15 +104,16 @@ const budgetSlice = createSlice({
             state.addBudgetEditInProcess = false;
             if (action.payload?.message === "success") {
                 notifications.show({
-                    title: 'Budget Updated',
+                    title: 'Buget actualizat',
                     message: 'Buget updatat cu succes!!',
                     icon: <SuccessIcon />,
                     radius: "lg",
                     autoClose: 5000,
+                    color:"green",
                 });
             } else {
                 notifications.show({
-                    title: "Something went wrong",
+                    title: "Ceva nu a mers bine",
                     message: 'Te rugăm să încerci din nou!!',
                     radius: "lg",
                     color: "red",
@@ -121,7 +123,7 @@ const budgetSlice = createSlice({
         },
         [editBudget.rejected]: (state) => {
             state.addBudgetEditInProcess = false;
-            alert("Budget update failed,Try again");
+            alert("Ceva nu a mers bine, încercați din nou");
         },
         [removeBudget.pending]: (state) => {
             // Placeholder for any pending logic
@@ -129,15 +131,16 @@ const budgetSlice = createSlice({
         [removeBudget.fulfilled]: (state, action) => {
             if (action.payload?.message === "success") {
                 notifications.show({
-                    title: 'Budget removed',
+                    title: 'Buget șters',
                     message: 'Buget șters cu succes!!',
                     icon: <SuccessIcon />,
                     radius: "lg",
                     autoClose: 5000,
+                    color:"green",
                 });
             } else {
                 notifications.show({
-                    title: "Something went wrong",
+                    title: "Ceva nu a mers bine",
                     message: 'Te rugăm să încerci din nou!!',
                     radius: "lg",
                     color: "red",
@@ -146,7 +149,7 @@ const budgetSlice = createSlice({
             }
         },
         [removeBudget.rejected]: (state) => {
-            alert("Budget remove failed,Try again");
+            alert("Ștergere buget eșuată, încercați din nou");
         },
         [fetchBudget.pending]: (state) => {
             state.fetchBudgetInProcess = true;
@@ -167,18 +170,19 @@ const budgetSlice = createSlice({
         [resetBudget.fulfilled]: (state, action) => {
             if (action.payload?.message === "success") {
                 notifications.show({
-                    title: 'Budget Reset',
+                    title: 'Buget resetat',
                     message: 'Buget resetat cu succes!!',
                     icon: <SuccessIcon />,
                     radius: "lg",
                     autoClose: 5000,
+                    color:"green",
                 });
                 state.budgetList = state.budgetList.map(budget =>
                     budget.id === action.payload.data.id ? action.payload.data : budget
                 );
             } else {
                 notifications.show({
-                    title: "Something went wrong",
+                    title: "Ceva nu a mers bine",
                     message: 'Te rugăm să încerci din nou!!',
                     radius: "lg",
                     color: "red",
@@ -187,7 +191,7 @@ const budgetSlice = createSlice({
             }
         },
         [resetBudget.rejected]: (state) => {
-            alert("Budget reset failed,Try again");
+            alert("Resetare eșuată");
         },
         [updateBudgetTimeAction.pending]: (state) => {
             // Placeholder for any pending logic
@@ -195,18 +199,19 @@ const budgetSlice = createSlice({
         [updateBudgetTimeAction.fulfilled]: (state, action) => {
             if (action.payload?.message === "success") {
                 notifications.show({
-                    title: 'Budget Time Updated',
+                    title: 'Timp buget resetat cu succes',
                     message: 'Ora bugetului a fost actualizată cu succes!!',
                     icon: <SuccessIcon />,
                     radius: "lg",
                     autoClose: 5000,
+                    color:"green",
                 });
                 state.budgetList = state.budgetList.map(budget =>
                     budget.id === action.payload.data.id ? action.payload.data : budget
                 );
             } else {
                 notifications.show({
-                    title: "Something went wrong",
+                    title: "Ceva nu a mers bine",
                     message: 'Te rugăm să încerci din nou!!',
                     radius: "lg",
                     color: "red",

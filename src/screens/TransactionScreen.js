@@ -12,7 +12,7 @@ export default function TransactionScreen() {
     const dispatch = useDispatch();
     const token = useSelector(state => state.user.token);
     const fetchTransactionInProcess = useSelector(state => state.transaction.fetchTransactionInProcess);
-    const transactionList = useSelector(state => state.transaction.transactionList);
+    const transactionList = useSelector(state => state.transaction.transactionList) || [];
     const error = useSelector(state => state.transaction.error);
     const [filteredTransactions, setFilteredTransactions] = useState(transactionList);
 

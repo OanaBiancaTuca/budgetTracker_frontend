@@ -1,44 +1,38 @@
-import { Table, Button,Text} from '@mantine/core';
-import {useSelector} from "react-redux";
+import { Table, Button, Text } from '@mantine/core';
+import { useSelector } from "react-redux";
 import { ReactComponent as EditSVG } from '../../assets/Edit.svg';
-import {useState} from "react";
+import { useState } from "react";
 import GoalEditForm from "./GoalEditForm";
 
 export default function GoalList() {
-
     const goalList = useSelector(state => state.goal.goalList)
-    const [displayGoalEditForm,setDisplayGoalEditForm] = useState(false);
-    const [selectedEditElement,setSelectedEditElement] = useState(null);
-    function handleGoalEditFormClose(){
+    const [displayGoalEditForm, setDisplayGoalEditForm] = useState(false);
+    const [selectedEditElement, setSelectedEditElement] = useState(null);
+
+    function handleGoalEditFormClose() {
         setDisplayGoalEditForm(false)
     }
-    function handleEdit(element){
+
+    function handleEdit(element) {
         setSelectedEditElement(element)
         setDisplayGoalEditForm(true)
     }
-    const goals = [{
-        name: "Emergency fund",
-        targetDate: "22 Aug 2023",
-        targetAmount: 50000,
-        status: "Pending"
-    },
-    {
-        name: "Savings",
-        targetDate: "31 Dec 2023",
-        targetAmount: 100000,
-        status: "Pending"
-    },
-    {
-        name: "Himachal Trip",
-        targetDate: "1 Nov 2023",
-        targetAmount: 30000,
-        status: "Pending"
-    }]
 
-    function handleDate(date){
+    function handleDate(date) {
         const formatDate = new Date(date)
         const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-        return formatDate.toLocaleDateString('ro-RO',dateOptions)
+        return formatDate.toLocaleDateString('ro-RO', dateOptions)
+    }
+
+    function formatPrediction(predictionInDays) {
+        const months = predictionInDays / 30;
+        if (months < 12) {
+            return `${months.toFixed(1)} luni`;
+        } else {
+            const years = Math.floor(months / 12);
+            const remainingMonths = (months % 12).toFixed(1);
+            return `${years} an${years > 1 ? 'i' : ''} și ${remainingMonths} luni`;
+        }
     }
 
     const rows = goalList.map((element) => (
@@ -47,13 +41,14 @@ export default function GoalList() {
             <td><Text fw={700}>{handleDate(element.targetDate)}</Text></td>
             <td><Text fw={700}>{`Ron. ${element.targetAmount}`}</Text></td>
             <td><Text fw={700}>{element.status}</Text></td>
-            <td>{<EditSVG onClick={() => handleEdit(element) }/>}</td>
+            <td><Text fw={700}>{element.prediction ? formatPrediction(element.prediction) : 'N/A'}</Text></td>
+            <td>{<EditSVG onClick={() => handleEdit(element)} />}</td>
         </tr>
     ));
 
     return (
         <div>
-            {displayGoalEditForm &&  <GoalEditForm element={selectedEditElement} open={displayGoalEditForm} close={handleGoalEditFormClose}/>}
+            {displayGoalEditForm && <GoalEditForm element={selectedEditElement} open={displayGoalEditForm} close={handleGoalEditFormClose} />}
             <Table verticalSpacing="lg">
                 <thead>
                     <tr>
@@ -61,6 +56,7 @@ export default function GoalList() {
                         <th><Text c="dimmed">TARGET DATE</Text></th>
                         <th><Text c="dimmed">VALOARE ȚINTĂ</Text></th>
                         <th><Text c="dimmed">STATUS</Text></th>
+                        <th><Text c="dimmed">PREDICȚIE</Text></th>
                         <th><Text c="dimmed">EDIT</Text></th>
                     </tr>
                 </thead>

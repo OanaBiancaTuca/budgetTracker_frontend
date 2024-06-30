@@ -51,11 +51,12 @@ const categorySlice = createSlice({
         [addCategory.fulfilled]:(state,action) =>{
             if(action.payload.message ==="success"){
                 notifications.show({
-                    title: 'Category Added',
+                    title: 'Categorie adăugată',
                     message: 'Categorie adăugată cu succes!!',
                     icon: <SuccessIcon />,
                     radius:"lg",
                     autoClose: 5000,
+                    color:"green",
                 })
             }else {
                 notifications.show({
@@ -72,7 +73,7 @@ const categorySlice = createSlice({
         [addCategory.rejected]:(state)=>{
             state.addCategoryInProcess = false
             notifications.show({
-                title: "Category Create failed",
+                title: "Crearea categoriei a eșuat",
                 message: 'Te rugăm să încerci din nou!!',
                 radius:"lg",
                 color:"red",
@@ -81,14 +82,12 @@ const categorySlice = createSlice({
         },
         [fetchCategory.pending]:(state) => {
             state.fetchCategoryInProcess = true
-            console.log("pending")
         },
         [fetchCategory.fulfilled]:(state,action) =>{
             if(action.payload.message ==="success"){
-                console.log(state.categoryList)
+
                 state.categoryList = action.payload.data
-                console.log("Category fetched")
-                console.log(state.categoryList)
+                
             }else {
                 console.log(action.payload.message)
             }
@@ -96,7 +95,7 @@ const categorySlice = createSlice({
         },
         [fetchCategory.rejected]:(state)=>{
             state.fetchCategoryInProcess = false
-            console.log("Category fetch failed")
+         
         },
     }
 })

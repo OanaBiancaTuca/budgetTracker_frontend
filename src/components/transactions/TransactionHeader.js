@@ -4,9 +4,9 @@ import { ReactComponent as FilterIcon } from '../../assets/Filter_alt.svg';
 import { ReactComponent as SearchIcon } from '../../assets/Search.svg';
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { showTransactionForm, importTransactions } from "../../features/transactionSlice";
+import { showTransactionForm, importTransactions, fetchTransaction } from "../../features/transactionSlice";
 
-export default function TransactionHeader({ onSearch, onFilter, onImport }) {
+export default function TransactionHeader({ onSearch, onFilter }) {
     const [searchValue, setSearchValue] = useState("");
     const [filterModalOpen, setFilterModalOpen] = useState(false);
     const [importModalOpen, setImportModalOpen] = useState(false);
@@ -19,14 +19,14 @@ export default function TransactionHeader({ onSearch, onFilter, onImport }) {
     const [pdfFile, setPdfFile] = useState(null);
 
     const token = useSelector(state => state.user.token);
-    console.log("Token from Redux store:", token); // Log pentru a verifica token-ul
-
     const dispatch = useDispatch();
 
     const handleInputChange = (event) => {
         const value = event.target.value;
         setSearchValue(value);
-        onSearch(value);
+        if (onSearch) {
+            onSearch(value);
+        }
     };
 
     const handleFilterChange = (field, value) => {
@@ -34,9 +34,11 @@ export default function TransactionHeader({ onSearch, onFilter, onImport }) {
     };
 
     const applyFilters = () => {
-        onFilter(filterValues);
+        if (onFilter) {
+            onFilter(filterValues);
+        }
         setFilterModalOpen(false);
-        resetFilterValues();
+        // nu reseta filtrul aici
     };
 
     const resetFilterValues = () => {
@@ -56,18 +58,12 @@ export default function TransactionHeader({ onSearch, onFilter, onImport }) {
         if (!pdfFile) return;
 
         try {
-            console.log("Token in handleImport:", token); // Log pentru a verifica token-ul înainte de import
-            const response = await dispatch(importTransactions({ file: pdfFile, token })).unwrap();
-
-            if (response.message === "success") {
-                onImport(response.transactions);
-                setImportModalOpen(false);
-                setPdfFile(null);
-            } else {
-                console.error("Import failed", response.message);
-            }
+            await dispatch(importTransactions({ file: pdfFile, token })).unwrap();
+            await dispatch(fetchTransaction({ token }));
+            setImportModalOpen(false);
+            setPdfFile(null);
         } catch (error) {
-            console.error("Error importing PDF", error);
+            console.error("Error importing PDF:", error.message);
         }
     };
 
@@ -102,8 +98,8 @@ export default function TransactionHeader({ onSearch, onFilter, onImport }) {
                             <Button radius="md" style={{ margin: 8 }} leftIcon={<FilterIcon />} variant="outline" color='green' onClick={() => setFilterModalOpen(true)}>
                                 Filtrare
                             </Button>
-                            <Button radius="md" style={{ margin: 8 }} leftIcon={<FilterIcon />} variant="outline" color='blue' onClick={() => setImportModalOpen(true)}>
-                                Import PDF
+                            <Button radius="md" style={{ margin: 8 }}  variant="outline" color='yellow' onClick={() => setImportModalOpen(true)}>
+                                Import tranzacții Raiffeisen Bank
                             </Button>
                         </Grid.Col>
                     </Grid>

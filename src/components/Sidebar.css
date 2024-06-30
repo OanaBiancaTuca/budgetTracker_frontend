@@ -1,0 +1,41 @@
+.chatbot-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .chatbot-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .chatbot-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+  }
+  
+  .chatbot-button-icon {
+    margin-right: 8px;
+    width: 20px;
+    height: 20px;
+  }
+  
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(0, 123, 255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 123, 255, 0); }
+  }
+  
+  .chatbot-button.pulse {
+    animation: pulse 1.5s infinite;
+  }
+  

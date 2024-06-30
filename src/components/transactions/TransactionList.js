@@ -4,10 +4,12 @@ import ArrowGIcon from '../../assets/Arrow_alt_ldown.svg';
 import Edit from '../../assets/Edit.svg';
 import TransactionEditForm from "./TransactionEditForm";
 import { useState } from "react";
+import { useSelector } from 'react-redux';
 
 export default function TransactionList({ filteredTransactions }) {
     const [displayTransactionEditForm, setDisplayTransactionEditForm] = useState(false);
     const [selectedEditElement, setSelectedEditElement] = useState(null);
+    const loading = useSelector(state => state.transaction.fetchTransactionInProcess);
 
     function handleTransactionEditFormClose() {
         setDisplayTransactionEditForm(false);
@@ -104,18 +106,22 @@ export default function TransactionList({ filteredTransactions }) {
             {displayTransactionEditForm && (
                 <TransactionEditForm element={selectedEditElement} open={displayTransactionEditForm} close={handleTransactionEditFormClose} />
             )}
-            <Table>
-                <thead>
-                    <tr>
-                        <th><Text fw={700} c="dimmed">DATA</Text></th>
-                        <th><Text fw={700} c="dimmed">DETALII TRANZACȚIE</Text></th>
-                        <th><Text fw={700} c="dimmed">DETALII CONT</Text></th>
-                        <th><Text fw={700} c="dimmed">SUMA</Text></th>
-                        <th><Text c="dimmed">EDITARE</Text></th>
-                    </tr>
-                </thead>
-                <tbody>{rows}</tbody>
-            </Table>
+            {loading ? (
+                <Text>Loading...</Text>
+            ) : (
+                <Table>
+                    <thead>
+                        <tr>
+                            <th><Text fw={700} c="dimmed">DATA</Text></th>
+                            <th><Text fw={700} c="dimmed">DETALII TRANZACȚIE</Text></th>
+                            <th><Text fw={700} c="dimmed">DETALII CONT</Text></th>
+                            <th><Text fw={700} c="dimmed">SUMA</Text></th>
+                            <th><Text c="dimmed">EDITARE</Text></th>
+                        </tr>
+                    </thead>
+                    <tbody>{rows}</tbody>
+                </Table>
+            )}
         </div>
     );
 }
