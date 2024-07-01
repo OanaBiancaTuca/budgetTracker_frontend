@@ -46,7 +46,7 @@ export default function ChangePasswordForm({ close }) {
         style={{ marginTop: 16 }}
         withAsterisk
         label="Parola veche"
-        type="parola"
+        type="password"
         {...form.getInputProps("oldPassword")}
       />
       <TextInput
@@ -54,7 +54,7 @@ export default function ChangePasswordForm({ close }) {
         style={{ marginTop: 16 }}
         withAsterisk
         label="Noua parola"
-        type="parola"
+        type="password"
         {...form.getInputProps("password")}
       />
       <TextInput
@@ -62,7 +62,7 @@ export default function ChangePasswordForm({ close }) {
         style={{ marginTop: 16 }}
         withAsterisk
         label="Confirm parola"
-        type="parrola"
+        type="password"
         {...form.getInputProps("confirmPassword")}
       />
       <Group style={{ marginTop: 36, marginBottom: 36 }}>

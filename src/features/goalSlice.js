@@ -57,7 +57,8 @@ const goalSlice = createSlice({
         addGoalInProcess: false,
         addGoalEditInProcess: false,
         fetchGoalInProcess: false,
-        goalList: []
+        goalList: [],
+        financialDetails: null  // Adaugă acest câmp pentru a stoca detaliile financiare
     }, reducers: {
         showGoalForm: (state) => {
             state.displayGoalForm = true
@@ -74,9 +75,10 @@ const goalSlice = createSlice({
             state.addGoalInProcess = false
             if (action.payload?.message === "success") {
                 console.log("Obiectiv creat")
+                state.financialDetails = action.payload.data;  // Salvează detaliile financiare
                 notifications.show({
                     title: 'Obiectiv creat',
-                    message: `Obiectiv creat cu succes!! Predicție: ${(action.payload.prediction / 30).toFixed(1)} luni.`,
+                    message: `Obiectiv creat cu succes!!', Predicție: ${(action.payload.data.prediction / 30).toFixed(1)} luni.`,
                     icon: <SuccessIcon />,
                     radius: "lg",
                     autoClose: 5000,
@@ -201,4 +203,4 @@ const goalSlice = createSlice({
 
 export const { showGoalForm, closeGoalForm } = goalSlice.actions;
 
-export default goalSlice;
+export default goalSlice.reducer;

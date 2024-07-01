@@ -22,7 +22,7 @@ const rootReducer = combineReducers({
     category: categorySlice.reducer,
     transaction: transactionSlice,
     budget: budgetSlice.reducer,
-    goal: goalSlice.reducer,
+    goal: goalSlice,
     logout: logoutReducer,
     chatbot: chatbotReducer // Adaugă chatbot reducer la root reducer
 });

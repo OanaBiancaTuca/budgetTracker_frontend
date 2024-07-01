@@ -243,10 +243,11 @@ const Chatbot = () => {
                             <div className="options-container">
                                 <div className="option-button" onClick={() => handleOperationClick('Adaugă obiectiv')}>Adaugă obiectiv</div>
                                 <div className="option-button" onClick={() => handleOperationClick('Vizualizează obiectivele')}>Vizualizează obiectivele</div>
-                                <div className="option-button" onClick={() => handleOperationClick('Vizualizează datoriile')}>Vizualizează datoriile</div>
                                 <div className="option-button" onClick={() => handleOperationClick('Șterge obiectiv')}>Șterge obiectiv</div>
-                                <div className="option-button" onClick={() => handleOperationClick('Actualizează statusul datoriei')}>Actualizează statusul datoriei</div>
                                 <div className="option-button" onClick={() => handleOperationClick('Adaugă datorie')}>Adaugă datorie</div>
+                                <div className="option-button" onClick={() => handleOperationClick('Vizualizează datoriile')}>Vizualizează datoriile</div>
+                                <div className="option-button" onClick={() => handleOperationClick('Actualizează statusul datoriei')}>Actualizează statusul datoriei</div>
+
                                 <div className="option-button" onClick={() => handleOperationClick('Șterge datorie')}>Șterge datorie</div>
                                 <div className="option-button" onClick={() => handleOperationClick('Schimbă scadența datoriei')}>Schimbă scadența datoriei</div>
                             </div>

@@ -96,3 +96,15 @@ export async function importTransactionsPdf(file, token) {
         throw error;
     }
 }
+export const getPaginatedTransactions = async (page, size, token) => {
+    try {
+        const response = await axios.get(`${baseUrl}/transactions/paginated`, {
+            params: { page, size },
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching paginated transactions", error);
+        throw error;
+    }
+};

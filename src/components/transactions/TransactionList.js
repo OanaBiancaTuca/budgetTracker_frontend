@@ -1,4 +1,4 @@
-import { Badge, Table, Text } from '@mantine/core';
+import { Badge, Table, Text, Button, Select, Group, Pagination } from '@mantine/core';
 import ArrowRIcon from '../../assets/Arrow_alt_ltop.svg';
 import ArrowGIcon from '../../assets/Arrow_alt_ldown.svg';
 import Edit from '../../assets/Edit.svg';
@@ -9,6 +9,8 @@ import { useSelector } from 'react-redux';
 export default function TransactionList({ filteredTransactions }) {
     const [displayTransactionEditForm, setDisplayTransactionEditForm] = useState(false);
     const [selectedEditElement, setSelectedEditElement] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(10);
     const loading = useSelector(state => state.transaction.fetchTransactionInProcess);
 
     function handleTransactionEditFormClose() {
@@ -19,6 +21,35 @@ export default function TransactionList({ filteredTransactions }) {
         setSelectedEditElement(element);
         setDisplayTransactionEditForm(true);
     }
+
+    const endIndex = currentPage * itemsPerPage;
+    const startIndex = endIndex - itemsPerPage;
+    const currentTransactions = filteredTransactions.slice(startIndex, endIndex);
+
+    const totalPages = Math.ceil(filteredTransactions.length / itemsPerPage);
+
+    const paginationControl = (
+        <Group position="center" mt="md">
+            <Select
+                label="Items per page"
+                value={itemsPerPage.toString()}
+                onChange={(value) => setItemsPerPage(Number(value))}
+                data={[
+                    { value: '5', label: '5' },
+                    { value: '10', label: '10' },
+                    { value: '15', label: '15' },
+                    { value: '20', label: '20' }
+                ]}
+                style={{ width: 100 }}
+            />
+            <Pagination
+                total={totalPages}
+                page={currentPage}
+                onChange={setCurrentPage}
+                color="blue"
+            />
+        </Group>
+    );
 
     const dateCol = (date) => {
         const dateTime = new Date(date);
@@ -91,7 +122,7 @@ export default function TransactionList({ filteredTransactions }) {
         );
     };
 
-    const rows = filteredTransactions.map((element) => (
+    const rows = currentTransactions.map((element) => (
         <tr key={element.id}>
             <td>{dateCol(element.dateTime)}</td>
             <td>{categoryCol(element.category, element.description, element.id)}</td>
@@ -109,18 +140,21 @@ export default function TransactionList({ filteredTransactions }) {
             {loading ? (
                 <Text>Loading...</Text>
             ) : (
-                <Table>
-                    <thead>
-                        <tr>
-                            <th><Text fw={700} c="dimmed">DATA</Text></th>
-                            <th><Text fw={700} c="dimmed">DETALII TRANZACȚIE</Text></th>
-                            <th><Text fw={700} c="dimmed">DETALII CONT</Text></th>
-                            <th><Text fw={700} c="dimmed">SUMA</Text></th>
-                            <th><Text c="dimmed">EDITARE</Text></th>
-                        </tr>
-                    </thead>
-                    <tbody>{rows}</tbody>
-                </Table>
+                <div>
+                    <Table>
+                        <thead>
+                            <tr>
+                                <th><Text fw={700} c="dimmed">DATA</Text></th>
+                                <th><Text fw={700} c="dimmed">DETALII TRANZACȚIE</Text></th>
+                                <th><Text fw={700} c="dimmed">DETALII CONT</Text></th>
+                                <th><Text fw={700} c="dimmed">SUMA</Text></th>
+                                <th><Text c="dimmed">EDITARE</Text></th>
+                            </tr>
+                        </thead>
+                        <tbody>{rows}</tbody>
+                    </Table>
+                    {paginationControl}
+                </div>
             )}
         </div>
     );

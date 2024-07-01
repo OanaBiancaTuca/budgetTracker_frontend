@@ -307,7 +307,7 @@ const DebtList = () => {
           {upNot &&
             <Notification
               transition="slide-up"
-              title="The Debt has been Edited Successfully !!!"
+              title="Datorie editata cu success !!!"
               color="blue"
               icon={<FaEdit />}
               style={{ position: 'fixed', bottom: '30px', right: '30px' }}
@@ -315,7 +315,7 @@ const DebtList = () => {
           {delNot &&
             <Notification
               transition="slide-up"
-              title="A Debt has been deleted Successfully !!!"
+              title="Datorie stearsa cu success !!!"
               color="red"
               icon={<FaTrash />}
               style={{ position: 'fixed', bottom: '30px', right: '30px' }}

@@ -106,7 +106,7 @@ const transactionSlice = createSlice({
             } else {
                 notifications.show({
                     title: "Eroare",
-                    message: payload.message || 'Te rugăm să încerci din nou!!',
+                    message: payload.data || 'Te rugăm să încerci din nou!!',
                     radius: "lg",
                     color: "red",
                 });
